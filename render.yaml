@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: backend-login-ruby
+    runtime: ruby
+    buildCommand: bundle install
+    startCommand: bundle exec rails server -b 0.0.0.0
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false

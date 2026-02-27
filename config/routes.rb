@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  # Esta línea le dice a Ruby:
-  # "Si recibes una petición POST en /login, llévala al controlador de autenticación"
+  # 1. Ruta para el Login
+  # Si tu controlador se llama 'sessions_controller.rb', pon "sessions#create"
+  # Si se llama 'authentication_controller.rb', deja "authentication#login"
   post "/login", to: "authentication#login"
 
-  # Esto crea las rutas estándar para usuarios (crear, ver, etc.)
-  resources :users
+  # 2. Rutas para el CRUD de usuarios (Listar y Crear)
+  # Esto habilita:
+  # GET /users (para la tabla del dashboard)
+  # POST /users (para el botón de guardar)
+  resources :users, only: [ :index, :create ]
 end
