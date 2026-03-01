@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
-  # Esto permite que Angular pida la lista de usuarios
   def index
     @users = User.all
     render json: @users
   end
 
-  # Esto permite que el botón "Guardar" de Angular funcione
   def create
     @user = User.new(user_params)
     if @user.save
@@ -15,10 +13,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    render json: { message: "Usuario eliminado correctamente" }
+  end
+
   private
 
   def user_params
-    # Solo permitimos que nos envíen email y password
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :active)
   end
 end
